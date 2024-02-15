@@ -11,7 +11,8 @@
   <div class="container mt-5">
     <h2 class="text-center">Teachable Machine Image Model</h2>
     <div class="text-center mb-3">
-      <button type="button" class="btn btn-primary" onclick="init()">Start</button>
+      <button type="button" class="btn btn-primary" id="startButton" onclick="init()">Start</button>
+      <button type="button" class="btn btn-danger" id="stopButton" onclick="stopWebcam()" style="display: none;">Stop</button>
     </div>
     <div class="text-center mb-3" id="webcam-container"></div>
     <div id="label-container" class="text-center"></div>
@@ -33,7 +34,7 @@
       maxPredictions = model.getTotalClasses();
 
       const flip = true;
-      webcam = new tmImage.Webcam(400, 300, flip);
+      webcam = new tmImage.Webcam(200, 200, flip);
       await webcam.setup();
       await webcam.play();
       window.requestAnimationFrame(loop);
@@ -44,6 +45,9 @@
         labelContainer.appendChild(document.createElement("div"));
       }
       resultContainer = document.getElementById("result-container");
+      // Toggle button visibility
+      document.getElementById("startButton").style.display = "none";
+      document.getElementById("stopButton").style.display = "inline-block";
     }
 
     async function loop() {
@@ -66,6 +70,14 @@
         }
       }
       resultContainer.innerText = "Dominant Result: " + prediction[maxProbIndex].className;
+    }
+
+    function stopWebcam() {
+      webcam.stop();
+      document.getElementById("webcam-container").innerHTML = "";
+      document.getElementById("startButton").style.display = "inline-block";
+      document.getElementById("stopButton").style.display = "none";
+      resultContainer.innerText = ""; // Clear result
     }
   </script>
 </body>
