@@ -12,7 +12,7 @@
     <h2 class="text-center">Teachable Machine Image Model</h2>
     <div class="text-center mb-3">
       <button type="button" class="btn btn-primary" id="startButton" onclick="init()">Start</button>
-      <button type="button" class="btn btn-danger" id="stopButton" onclick="stopWebcam()" style="display: none;">Stop</button>
+      <button type="button" class="btn btn-danger" id="stopButton" onclick="confirmReload()" style="display: none;">Stop</button>
     </div>
     <div class="text-center mb-3" id="webcam-container"></div>
     <div id="label-container" class="text-center"></div>
@@ -72,13 +72,24 @@
       resultContainer.innerText = "Dominant Result: " + prediction[maxProbIndex].className;
     }
 
-    function stopWebcam() {
+    function confirmReload() {
       webcam.stop();
-      document.getElementById("webcam-container").innerHTML = "";
-      document.getElementById("startButton").style.display = "inline-block";
-      document.getElementById("stopButton").style.display = "none";
-      resultContainer.innerText = ""; // Clear result
+      // Display a confirmation dialog
+      var result = window.confirm("Are you sure you want to reload the page?");
+      
+      // If the user clicks OK (result is true), reload the page
+      if (result) {
+        location.reload();
+      }
     }
+
+    // function stopWebcam() {
+    //   webcam.stop();
+    //   document.getElementById("webcam-container").innerHTML = "";
+    //   document.getElementById("startButton").style.display = "inline-block";
+    //   document.getElementById("stopButton").style.display = "none";
+    //   resultContainer.innerText = ""; // Clear result
+    // }
   </script>
 </body>
 </html>
